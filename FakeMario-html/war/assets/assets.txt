@@ -1,0 +1,8 @@
+d:
+d:data
+i:data/dibujo.png
+b:data/dibujo.svg
+i:data/FirstLevel.jpg
+i:data/FirstLevel.png
+i:data/Mario.png
+b:data/Mario.svg

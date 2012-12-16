@@ -10,7 +10,7 @@ public class Main {
 		cfg.useGL20 = true;
 		cfg.width = 1280;
 		cfg.height = 720;
-		
+
 		new LwjglApplication(new FakeMario(), cfg);
 	}
 }
