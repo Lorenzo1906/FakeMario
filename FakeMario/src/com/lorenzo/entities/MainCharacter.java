@@ -18,7 +18,7 @@ public class MainCharacter extends Entity {
 		
 		characterTexture = new Texture(Gdx.files.internal("data/Mario.png"));
 		characterSprite = new Sprite(characterTexture);
-		
+
 		footFixture.setUserData(this);
 	}
 	
@@ -62,5 +62,9 @@ public class MainCharacter extends Entity {
 			float impulse = body.getMass()*12;
 			body.applyLinearImpulse(new Vector2(0, impulse), body.getWorldCenter());
 		}
+	}
+	
+	public void dispose(){
+		characterTexture.dispose();
 	}
 }

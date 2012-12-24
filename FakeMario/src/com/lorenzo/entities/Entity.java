@@ -25,7 +25,7 @@ public class Entity {
 		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.position.set(5, 30);
+		bodyDef.position.set(10, 30);
 		body = world.createBody(bodyDef);
 		
 		PolygonShape polygonShape = new PolygonShape();

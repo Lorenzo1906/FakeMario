@@ -6,8 +6,6 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,27 +14,23 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.lorenzo.camera.ParallaxCamera;
+import com.lorenzo.entities.Background;
 import com.lorenzo.entities.MainCharacter;
+import com.lorenzo.entities.Position;
+import com.lorenzo.persistence.LevelDescriptor;
+import com.lorenzo.persistence.LevelDescriptorParser;
 import com.lorenzo.utils.Utils;
 
 public class GameWorld {
 
 	private World world;
 	private MainCharacter character;
-	//TODO:Fix this
-	private Texture[] texturesLayer1;
-	private Texture[] texturesLayer2;
-	private Texture[] texturesLayer3;
-	private Texture[] texturesLayer4;
-	private List<Sprite> spritesLayer1;
-	private List<Sprite> spritesLayer2;
-	private List<Sprite> spritesLayer3;
-	private List<Sprite> spritesLayer4;
+	private List<Sprite> firstLayer;
+	private List<Sprite> secondLayer;
+	private List<Sprite> thirdLayer;
+	private List<Sprite> fourthLayer;
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	private EntityContactListener contactListener;
-	private float screenW;
-	//private float screenH;
 
 	public static enum moveState{
 		MS_STOP,
@@ -46,20 +40,25 @@ public class GameWorld {
 
 
 	public GameWorld(float screenW, float screenH) {
-
-		this.screenW = screenW;
-		//this.screenH = screenH;
-
 		world = new World(new Vector2(0, -10),true);
 
 		contactListener = new EntityContactListener();
 		world.setContactListener(contactListener);
 
-
-		inicializeLayers();
 		inicializeCharacter();
 		inicializeFloor();
+		
 
+		String levelDir = "descriptors/firstLevelDescriptor.json";
+
+		LevelDescriptorParser levelParser = new LevelDescriptorParser(levelDir);
+		LevelDescriptor level = levelParser.parseLevel();
+		System.out.println(level.getLevelName());
+		firstLayer = generateLayer(level.getFirstLayer());
+		secondLayer = generateLayer(level.getSecondLayer());
+		thirdLayer = generateLayer(level.getThirdLayer());
+		fourthLayer = generateLayer(level.getFourthLayer());
+		//levelParser.writeLevel();
 	}
 
 	public World getWorld() {
@@ -76,6 +75,38 @@ public class GameWorld {
 
 	public void setDebugRenderer(Box2DDebugRenderer debugRenderer) {
 		this.debugRenderer = debugRenderer;
+	}
+	
+	public List<Sprite> getFirstLayer() {
+		return firstLayer;
+	}
+
+	public void setFirstLayer(List<Sprite> firstLayer) {
+		this.firstLayer = firstLayer;
+	}
+
+	public List<Sprite> getSecondLayer() {
+		return secondLayer;
+	}
+
+	public void setSecondLayer(List<Sprite> secondLayer) {
+		this.secondLayer = secondLayer;
+	}
+
+	public List<Sprite> getThirdLayer() {
+		return thirdLayer;
+	}
+
+	public void setThirdLayer(List<Sprite> thirdLayer) {
+		this.thirdLayer = thirdLayer;
+	}
+
+	public List<Sprite> getFourthLayer() {
+		return fourthLayer;
+	}
+
+	public void setFourthLayer(List<Sprite> fourthLayer) {
+		this.fourthLayer = fourthLayer;
 	}
 
 	public MainCharacter getCharacter() {
@@ -115,137 +146,22 @@ public class GameWorld {
 		character = new MainCharacter(world, 6f);
 	}
 
-	private void inicializeLayers(){
-		//lAYER 1
-		texturesLayer1 = new Texture[1];
-		texturesLayer1[0] = new Texture(Gdx.files.internal("data/layers/Layer11.png"));
-
-		spritesLayer1 = new ArrayList<Sprite>();
-		int y = 0;
-		for(int i = 0; i<108877; i += 256){
-			spritesLayer1.add(new Sprite(texturesLayer1[0]));
-			spritesLayer1.get(y).setSize(256, 256);
-			spritesLayer1.get(y).setPosition(i, 0);
-			y++;
-
-			spritesLayer1.add(new Sprite(texturesLayer1[0]));
-			spritesLayer1.get(y).setSize(256, 256);
-			spritesLayer1.get(y).setPosition(i, 256);
-			y++;
-
-			spritesLayer1.add(new Sprite(texturesLayer1[0]));
-			spritesLayer1.get(y).setSize(256, 256);
-			spritesLayer1.get(y).setPosition(i,512);
-			y++;
+	private List<Sprite> generateLayer(List<Background> sprites){
+		List<Sprite> spritesFinals = new ArrayList<Sprite>();
+		for (Background background : sprites) {
+			Texture texture = new Texture(Gdx.files.internal(background.getTextureDir()));
+			Position pos = background.getPos();
+			Sprite sprite = new Sprite(texture);
+			sprite.setSize(256, 256);
+			sprite.setPosition(Float.parseFloat(pos.getPosX()), Float.parseFloat(pos.getPosY()));
+			spritesFinals.add(sprite);
 		}
-
-		//lAYER 2
-		texturesLayer2 = new Texture[4];
-		texturesLayer2[0] = new Texture(Gdx.files.internal("data/layers/Layer21.png"));
-		texturesLayer2[1] = new Texture(Gdx.files.internal("data/layers/Layer22.png"));
-		texturesLayer2[2] = new Texture(Gdx.files.internal("data/layers/Layer23.png"));
-		texturesLayer2[3] = new Texture(Gdx.files.internal("data/layers/Layer24.png"));
-
-		spritesLayer2 = new ArrayList<Sprite>();
-		int W = 0;
-		for(int i = 0; i<108877; i += 256){
-			int  ran = MathUtils.random(4);
-			if(ran <=3){
-				spritesLayer2.add(new Sprite(texturesLayer2[ran]));
-				spritesLayer2.get(W).setSize(256, 256);
-				spritesLayer2.get(W).setPosition(i, 256);
-				W++;
-			}
-
-			int  ran2 = MathUtils.random(4);
-			if(ran2 <=3){
-				spritesLayer2.add(new Sprite(texturesLayer2[ran2]));
-				spritesLayer2.get(W).setSize(256, 256);
-				spritesLayer2.get(W).setPosition(i, 512);
-				W++;
-			}
-		}
-
-		texturesLayer3 = new Texture[4];
-		texturesLayer3[0] = new Texture(Gdx.files.internal("data/layers/Layer21.png"));
-		texturesLayer3[1] = new Texture(Gdx.files.internal("data/layers/Layer22.png"));
-		texturesLayer3[2] = new Texture(Gdx.files.internal("data/layers/Layer23.png"));
-		texturesLayer3[3] = new Texture(Gdx.files.internal("data/layers/Layer24.png"));
-
-		spritesLayer3 = new ArrayList<Sprite>();
-		int u = 0;
-		for(int i = 0; i<108877; i += 256){
-			int  ran = MathUtils.random(4);
-			if(ran <=3){
-				spritesLayer3.add(new Sprite(texturesLayer3[ran]));
-				spritesLayer3.get(u).setSize(256, 256);
-				spritesLayer3.get(u).setPosition(i, 256);
-				u++;
-			}
-
-			int  ran2 = MathUtils.random(4);
-			if(ran2 <=3){
-				spritesLayer3.add(new Sprite(texturesLayer3[ran2]));
-				spritesLayer3.get(u).setSize(256, 256);
-				spritesLayer3.get(u).setPosition(i, 512);
-				u++;
-			}
-		}
-
-		//lAYER 3
-		texturesLayer4 = new Texture[3];
-		texturesLayer4[0] = new Texture(Gdx.files.internal("data/layers/Layer31.png"));
-		texturesLayer4[1] = new Texture(Gdx.files.internal("data/layers/Layer32.png"));
-		texturesLayer4[2] = new Texture(Gdx.files.internal("data/layers/Layer33.png"));
-
-		spritesLayer4 = new ArrayList<Sprite>();
-		int e = 0;
-		for(int i = 0; i<108877; i += 256){
-			spritesLayer4.add(new Sprite(texturesLayer4[MathUtils.random(2)]));
-			spritesLayer4.get(e).setSize(256, 256);
-			spritesLayer4.get(e).setPosition(i, 0);
-			e++;
-		}
-
-	}
-
-	public void updateCamera(ParallaxCamera camera, SpriteBatch batch){
-		// background layer, no parallax, centered around origin
-		batch.setProjectionMatrix(camera.calculateParallaxMatrix(0.25f, 1));
-		batch.disableBlending();
-		batch.begin();
-		for (Sprite sprite : spritesLayer1) {
-			batch.draw(sprite, sprite.getX()-screenW, sprite.getY());
-		}
-		batch.end();
-		batch.enableBlending();
-
-		// midground layer, 0.5 parallax (move at half speed on x, full speed on y)
-		batch.setProjectionMatrix(camera.calculateParallaxMatrix(0.5f, 1));
-		batch.begin();
-		for (Sprite sprite : spritesLayer2) {
-			batch.draw(sprite, sprite.getX()-screenW, sprite.getY());
-		}
-		batch.end();
-
-		batch.setProjectionMatrix(camera.calculateParallaxMatrix(0.7f, 1));
-		batch.begin();
-		for (Sprite sprite : spritesLayer3) {
-			batch.draw(sprite, sprite.getX()-screenW, sprite.getY());
-		}
-		batch.end();
-
-		// foreground layer, 1.0 parallax (move at full speed)
-		batch.setProjectionMatrix(camera.calculateParallaxMatrix(1f, 1));
-		batch.begin();
-		for (Sprite sprite : spritesLayer4) {
-			batch.draw(sprite, sprite.getX()-screenW, sprite.getY());
-		}
-		batch.end();
+		return spritesFinals;
 	}
 
 	public void dispose(){
 		world.dispose();
+		character.dispose();
 	}
 
 }

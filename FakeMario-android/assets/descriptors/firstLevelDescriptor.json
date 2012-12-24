@@ -1,0 +1,300 @@
+{
+"firstLayer": [
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "0",
+			"posY": "0"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "0",
+			"posY": "256"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "0",
+			"posY": "512"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "256",
+			"posY": "0"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "256",
+			"posY": "256"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "256",
+			"posY": "512"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "512",
+			"posY": "0"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "512",
+			"posY": "256"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "512",
+			"posY": "512"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "768",
+			"posY": "0"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "768",
+			"posY": "256"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "768",
+			"posY": "512"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "1024",
+			"posY": "0"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer11.png",
+		"pos": {
+			"posX": "1024",
+			"posY": "256"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer12.png",
+		"pos": {
+			"posX": "1024",
+			"posY": "512"
+		}
+	}
+],
+"levelWidth": 108877,
+"thirdLayer": [
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer22.png",
+		"pos": {
+			"posX": "1405",
+			"posY": "265"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer24.png",
+		"pos": {
+			"posX": "1800",
+			"posY": "520"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer21.png",
+		"pos": {
+			"posX": "2400",
+			"posY": "260"
+		}
+	},
+		{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer22.png",
+		"pos": {
+			"posX": "2900",
+			"posY": "420"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer24.png",
+		"pos": {
+			"posX": "3450",
+			"posY": "350"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer21.png",
+		"pos": {
+			"posX": "4000",
+			"posY": "200"
+		}
+	}
+],
+"levelName": "Level One",
+"fourthLayer": [
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer31.png",
+		"pos": {
+			"posX": "0",
+			"posY": "76"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer32.png",
+		"pos": {
+			"posX": "400",
+			"posY": "76"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer33.png",
+		"pos": {
+			"posX": "790",
+			"posY": "76"
+		}
+	},
+		{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer31.png",
+		"pos": {
+			"posX": "1000",
+			"posY": "76"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer32.png",
+		"pos": {
+			"posX": "1500",
+			"posY": "76"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer33.png",
+		"pos": {
+			"posX": "2000",
+			"posY": "76"
+		}
+	},
+		{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer31.png",
+		"pos": {
+			"posX": "2300",
+			"posY": "76"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer32.png",
+		"pos": {
+			"posX": "2700",
+			"posY": "76"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer33.png",
+		"pos": {
+			"posX": "3500",
+			"posY": "76"
+		}
+	}
+],
+"secondLayer": [
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer21.png",
+		"pos": {
+			"posX": "155",
+			"posY": "465"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer23.png",
+		"pos": {
+			"posX": "550",
+			"posY": "380"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer24.png",
+		"pos": {
+			"posX": "1040",
+			"posY": "390"
+		}
+	},
+		{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer21.png",
+		"pos": {
+			"posX": "1500",
+			"posY": "420"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer23.png",
+		"pos": {
+			"posX": "2000",
+			"posY": "420"
+		}
+	},
+	{
+		"class": "com.lorenzo.entities.Background",
+		"textureDir": "data/layers/Layer24.png",
+		"pos": {
+			"posX": "2450",
+			"posY": "390"
+		}
+	}
+]
+}
