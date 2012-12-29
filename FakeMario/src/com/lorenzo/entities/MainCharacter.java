@@ -52,6 +52,9 @@ public class MainCharacter extends Entity {
 			desiredVel = characterSpeed* Utils.BOX_WORLD_TO;
 			break;
 		}
+		if(numContacts == 0){
+			desiredVel = desiredVel/2;
+		}
 		float velChange = desiredVel - vel.x;
 		float impulse = body.getMass()*velChange;
 		body.applyLinearImpulse(new Vector2(impulse,0), body.getWorldCenter());
@@ -59,8 +62,9 @@ public class MainCharacter extends Entity {
 	
 	public void jump(){
 		if(numContacts > 0){
-			float impulse = body.getMass()*12;
-			body.applyLinearImpulse(new Vector2(0, impulse), body.getWorldCenter());
+		    Vector2 vel = body.getLinearVelocity();
+		    vel.y = 23;
+		    body.setLinearVelocity(vel);
 		}
 	}
 	

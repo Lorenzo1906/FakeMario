@@ -33,14 +33,14 @@ public class Entity {
 
 		fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
-		fixtureDef.density = 1.2f;
+		fixtureDef.density = 45f;
 		fixtureDef.friction = 0.4f;
 		fixtureDef.restitution = 0.1f;
 
 		fixture = body.createFixture(fixtureDef);
 		
 		PolygonShape footPolygon = new PolygonShape();
-		footPolygon.setAsBox(radius, (float)1, new Vector2(0, (float) -5.5), 0);
+		footPolygon.setAsBox(radius, (float)1, new Vector2(0, -(radius)), 0);
 		footFixtureDef = new FixtureDef();
 		footFixtureDef.shape = footPolygon;
 		footFixtureDef.density = 1;

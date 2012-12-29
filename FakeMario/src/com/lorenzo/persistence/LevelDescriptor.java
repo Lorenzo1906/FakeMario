@@ -2,16 +2,17 @@ package com.lorenzo.persistence;
 
 import java.util.List;
 
-import com.lorenzo.entities.Background;
+import com.lorenzo.entities.Static;
 
 public class LevelDescriptor {
 	private String levelName;
 	private int levelWidth;
-	private List<Background> firstLayer;
-	private List<Background> secondLayer;
-	private List<Background> thirdLayer;
-	private List<Background> fourthLayer;
-	
+	private List<Static> firstLayer;
+	private List<Static> secondLayer;
+	private List<Static> thirdLayer;
+	private List<Static> fourthLayer;
+	private List<Static> staticSprites;
+
 	public LevelDescriptor() {
 	}
 	
@@ -31,36 +32,43 @@ public class LevelDescriptor {
 		this.levelWidth = levelWidth;
 	}
 
-	public List<Background> getFirstLayer() {
+	public List<Static> getFirstLayer() {
 		return firstLayer;
 	}
 
-	public void setFirstLayer(List<Background> firstLayer) {
+	public void setFirstLayer(List<Static> firstLayer) {
 		this.firstLayer = firstLayer;
 	}
 
-	public List<Background> getSecondLayer() {
+	public List<Static> getSecondLayer() {
 		return secondLayer;
 	}
 
-	public void setSecondLayer(List<Background> secondLayer) {
+	public void setSecondLayer(List<Static> secondLayer) {
 		this.secondLayer = secondLayer;
 	}
 
-	public List<Background> getThirdLayer() {
+	public List<Static> getThirdLayer() {
 		return thirdLayer;
 	}
 
-	public void setThirdLayer(List<Background> thirdLayer) {
+	public void setThirdLayer(List<Static> thirdLayer) {
 		this.thirdLayer = thirdLayer;
 	}
 
-	public List<Background> getFourthLayer() {
+	public List<Static> getFourthLayer() {
 		return fourthLayer;
 	}
 
-	public void setFourthLayer(List<Background> fourthLayer) {
+	public void setFourthLayer(List<Static> fourthLayer) {
 		this.fourthLayer = fourthLayer;
+	}
+	public List<Static> getStaticSprites() {
+		return staticSprites;
+	}
+
+	public void setStaticSprites(List<Static> staticSprites) {
+		this.staticSprites = staticSprites;
 	}
 
 }

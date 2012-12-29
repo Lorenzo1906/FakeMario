@@ -86,17 +86,23 @@ public class FakeMario extends ApplicationAdapter {
 
 		MainCharacter character = world.getCharacter();
 		batch.begin();
-		//world.getDebugRenderer().render(world.getWorld(), camera.combined);
 		batch.draw(character.getCharacterSprite(), character.getBody().getPosition().x*Utils.BOX_WORLD_TO, character.getBody().getPosition().y*Utils.BOX_WORLD_TO);
+		for (Sprite sprite : world.getStaticSprites()) {
+			int textureWidth = sprite.getTexture().getWidth();
+			int textureHeight = sprite.getTexture().getHeight();
+			int spriteWidth = (int) sprite.getWidth();
+			int spriteHeight = (int) sprite.getHeight();
+			batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(),spriteWidth,textureWidth,0,0,spriteWidth/textureWidth,spriteHeight/textureHeight);
+		}
+		//world.getDebugRenderer().render(world.getWorld(), camera.combined);
 		batch.end();
-		//System.out.println("Position: "+character.getBody().getPosition().x*Utils.BOX_WORLD_TO+" : "+character.getBody().getPosition().y*Utils.BOX_WORLD_TO);
+		System.out.println("Position: "+character.getBody().getPosition().x*Utils.BOX_WORLD_TO+" : "+character.getBody().getPosition().y*Utils.BOX_WORLD_TO);
 		
 		batch.setProjectionMatrix(camera.calculateParallaxMatrix(0, 0.5f));
 		batch.begin();
 		font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), -200, 0);
 		batch.end();
-
-
+		
 		if(Gdx.input.isKeyPressed(Keys.LEFT)){
 			if(character.getBody().getPosition().x >= 0){
 				character.moveCharacter(GameWorld.moveState.MS_LEFT,characterSpeed);
