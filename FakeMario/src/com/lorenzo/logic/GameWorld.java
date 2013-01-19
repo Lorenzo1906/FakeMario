@@ -1,6 +1,7 @@
 package com.lorenzo.logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -16,10 +17,15 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.lorenzo.entities.Size;
-import com.lorenzo.entities.Static;
+import com.lorenzo.entities.Item;
+import com.lorenzo.entities.ItemBuilder;
 import com.lorenzo.entities.MainCharacter;
-import com.lorenzo.entities.Position;
+import com.lorenzo.entities.MainCharacterBuilder;
+import com.lorenzo.model.Actor;
+import com.lorenzo.model.Position;
+import com.lorenzo.model.Size;
+import com.lorenzo.model.SpecificItem;
+import com.lorenzo.model.Static;
 import com.lorenzo.persistence.LevelDescriptor;
 import com.lorenzo.persistence.LevelDescriptorParser;
 import com.lorenzo.utils.Utils;
@@ -34,6 +40,7 @@ public class GameWorld {
 	private List<Sprite> fourthLayer;
 	private List<Sprite> staticSprites;
 	private List<Texture> textures;
+	private List<Item> items;
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	private EntityContactListener contactListener;
 
@@ -45,6 +52,8 @@ public class GameWorld {
 
 
 	public GameWorld(float screenW, float screenH) {
+		
+		//LevelDescriptorParser.generateTexturePacker();
 		world = new World(new Vector2(0, -10),true);
 
 		contactListener = new EntityContactListener();
@@ -52,7 +61,6 @@ public class GameWorld {
 
 		textures = new ArrayList<Texture>();
 
-		inicializeCharacter();
 		inicializeFloor();
 
 
@@ -66,6 +74,8 @@ public class GameWorld {
 		thirdLayer = generateLayer(level.getThirdLayer());
 		fourthLayer = generateLayer(level.getFourthLayer());
 		staticSprites = generateStatics(level.getStaticSprites());
+		items = generateItems(level.getSpecificItems());
+		inicializeCharacter(level.getCharacter());
 		//levelParser.writeLevel();
 	}
 
@@ -133,9 +143,17 @@ public class GameWorld {
 		this.staticSprites = staticSprites;
 	}
 
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
 
 	public void stepGameWorld(){
 		world.step( 1/60f, 6, 2 );
+		removeElements();
 	}
 
 	private void inicializeFloor(){
@@ -160,8 +178,18 @@ public class GameWorld {
 		ceilingBody.createFixture(myFixtureDef);
 	}
 
-	private void inicializeCharacter(){
-		character = new MainCharacter(world, 3.2f);
+	private void inicializeCharacter(Actor actor){
+
+		Position pos = actor.getPos();
+		Size size = actor.getSize();
+		
+		character = (MainCharacter) new MainCharacterBuilder()
+									.buildBody(world, Integer.parseInt(pos.getPosX())*Utils.WORLD_TO_BOX, Integer.parseInt(pos.getPosY())*Utils.WORLD_TO_BOX)
+									.buildFixture(Integer.parseInt(size.getHeight())*Utils.WORLD_TO_BOX, Integer.parseInt(size.getWidth())*Utils.WORLD_TO_BOX)
+									.buildFootFixture(Integer.parseInt(size.getHeight())*Utils.WORLD_TO_BOX, Integer.parseInt(size.getWidth())*Utils.WORLD_TO_BOX)
+									.buildTextureAtlas(actor.getTextureDir())
+									.build();
+		character.startAnimations();
 	}
 
 	private List<Sprite> generateLayer(List<Static> sprites){
@@ -178,7 +206,7 @@ public class GameWorld {
 		}
 		return spritesFinals;
 	}
-	
+
 	private List<Sprite> generateStatics(List<Static> statics){
 		List<Sprite> spriteFinals = new ArrayList<Sprite>();
 		for (Static static1 : statics) {
@@ -190,7 +218,7 @@ public class GameWorld {
 			Sprite sprite = new Sprite(texture);
 			sprite.setSize(Float.parseFloat(size.getWidth()), Float.parseFloat(size.getHeight()));
 			sprite.setPosition(Float.parseFloat(pos.getPosX()), Float.parseFloat(pos.getPosY()));
-			
+
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type  = BodyType.StaticBody;
 			bodyDef.position.set(Float.parseFloat(pos.getPosX())*Utils.WORLD_TO_BOX, Float.parseFloat(pos.getPosY())*Utils.WORLD_TO_BOX);
@@ -200,18 +228,56 @@ public class GameWorld {
 			myFixtureDef.shape = polygonShape;
 			polygonShape.setAsBox((Float.parseFloat(size.getWidth())*Utils.WORLD_TO_BOX)/2, (Float.parseFloat(size.getHeight())*Utils.WORLD_TO_BOX)/2);
 			floorBody.createFixture(myFixtureDef);
-			
+
 			spriteFinals.add(sprite);
 			textures.add(texture);
 		}
 		return spriteFinals;
 	}
+	
+	private List<Item> generateItems(List<SpecificItem> items){
+		List<Item> itemsTemp = new ArrayList<Item>();
+		for (SpecificItem specificItem : items) {
+			Position pos = specificItem.getPos();
+			Size size = specificItem.getSize();
+			String textureDir = specificItem.getTextureDir();
+			int hits = specificItem.getHits();
+			Item item = (Item) new ItemBuilder()
+								.buildBody(world, Float.parseFloat(pos.getPosX())*Utils.WORLD_TO_BOX, Float.parseFloat(pos.getPosY())*Utils.WORLD_TO_BOX)
+								.buildFixture(Float.parseFloat(size.getWidth())*Utils.WORLD_TO_BOX, Float.parseFloat(size.getHeight())*Utils.WORLD_TO_BOX)
+								.buildFootFixture(Float.parseFloat(size.getWidth())*Utils.WORLD_TO_BOX, Float.parseFloat(size.getHeight())*Utils.WORLD_TO_BOX)
+								.buildTexture(textureDir)
+								.buildSprite()
+								.build();
+			item.setMaximunHits(hits);
+			item.setItemType(specificItem.getItemType());
+			item.setItemContent(specificItem.getItemContent());
+			itemsTemp.add(item);
+		}
+		return itemsTemp;
+	}
+
+	private void removeElements(){
+		Iterator<Item> iterator = items.iterator();
+		while (iterator.hasNext()) {
+			Item item = iterator.next();
+			if(item.isFlaggedForDelete()){
+				item.destroy();
+				iterator.remove();
+			}
+		}
+	}
 
 	public void dispose(){
 		world.dispose();
-		character.dispose();
+		if(character.getTexture() != null){
+			character.dispose();
+		}
 		for (Texture texture : textures) {
 			texture.dispose();
+		}
+		for (Item item : items) {
+			item.dispose();
 		}
 	}
 

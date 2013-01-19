@@ -1,90 +1,53 @@
 package com.lorenzo.entities;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public class Entity {
-
+public abstract class Entity {
 	protected Body body;
-	protected float radius;
-	protected int numContacts;
-	protected FixtureDef fixtureDef;
 	protected Fixture fixture;
-	protected FixtureDef footFixtureDef;
 	protected Fixture footFixture;
-	
-	public Entity(World world, float radius){
-		numContacts = 0;
-		this.radius = radius;
-		
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.position.set(10, 30);
-		body = world.createBody(bodyDef);
-		
-		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(radius, radius);
-
-		fixtureDef = new FixtureDef();
-		fixtureDef.shape = polygonShape;
-		fixtureDef.density = 45f;
-		fixtureDef.friction = 0.4f;
-		fixtureDef.restitution = 0.1f;
-
-		fixture = body.createFixture(fixtureDef);
-		
-		PolygonShape footPolygon = new PolygonShape();
-		footPolygon.setAsBox(radius, (float)1, new Vector2(0, -(radius)), 0);
-		footFixtureDef = new FixtureDef();
-		footFixtureDef.shape = footPolygon;
-		footFixtureDef.density = 1;
-		footFixtureDef.isSensor = true;
-		footFixture = body.createFixture(footFixtureDef);
-	}
-	
-	public void startContact(){
-		numContacts++;
-	}
-	
-	public void endContact(){
-		numContacts--;
-	}
+	protected Texture texture;
+	protected TextureAtlas atlas;
+	protected Sprite sprite;
 	
 	public Body getBody() {
 		return body;
 	}
-
 	public void setBody(Body body) {
 		this.body = body;
 	}
-
-	public float getRadius() {
-		return radius;
+	public Fixture getFixture() {
+		return fixture;
 	}
-
-	public void setRadius(float radius) {
-		this.radius = radius;
+	public void setFixture(Fixture fixture) {
+		this.fixture = fixture;
 	}
-
-	public int getNumContacts() {
-		return numContacts;
+	public Fixture getFootFixture() {
+		return footFixture;
 	}
-
-	public void setNumContacts(int numContacts) {
-		this.numContacts = numContacts;
+	public void setFootFixture(Fixture footFixture) {
+		this.footFixture = footFixture;
 	}
-
-	public FixtureDef getFixtureDef() {
-		return fixtureDef;
+	public Texture getTexture() {
+		return texture;
 	}
-
-	public void setFixtureDef(FixtureDef fixtureDef) {
-		this.fixtureDef = fixtureDef;
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
+	public TextureAtlas getAtlas() {
+		return atlas;
+	}
+	public void setAtlas(TextureAtlas atlas) {
+		this.atlas = atlas;
+	}
+	public Sprite getSprite() {
+		return sprite;
+	}
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
 	}
 }

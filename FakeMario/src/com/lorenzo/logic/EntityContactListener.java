@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.lorenzo.entities.Item;
 import com.lorenzo.entities.MainCharacter;
 
 public class EntityContactListener implements ContactListener{
@@ -13,7 +14,7 @@ public class EntityContactListener implements ContactListener{
 		
 		Object firstBody = contact.getFixtureA().getUserData();
 		Object secondBody = contact.getFixtureB().getUserData();
-		
+
 		if(firstBody instanceof MainCharacter){
 			MainCharacter mainCharacter = (MainCharacter) firstBody;
 			mainCharacter.startContact();
@@ -22,6 +23,16 @@ public class EntityContactListener implements ContactListener{
 		if(secondBody instanceof MainCharacter){
 			MainCharacter mainCharacter = (MainCharacter) secondBody;
 			mainCharacter.startContact();
+		}
+		
+		if(firstBody instanceof Item){
+			Item item = (Item) firstBody;
+			item.startContact();
+		}
+		
+		if(secondBody instanceof Item){
+			Item item = (Item) secondBody;
+			item.startContact();
 		}
 	}
 

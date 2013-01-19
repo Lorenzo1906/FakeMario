@@ -2,16 +2,20 @@ package com.lorenzo.persistence;
 
 import java.util.List;
 
-import com.lorenzo.entities.Static;
+import com.lorenzo.model.Actor;
+import com.lorenzo.model.SpecificItem;
+import com.lorenzo.model.Static;
 
 public class LevelDescriptor {
 	private String levelName;
 	private int levelWidth;
+	private Actor character;
 	private List<Static> firstLayer;
 	private List<Static> secondLayer;
 	private List<Static> thirdLayer;
 	private List<Static> fourthLayer;
 	private List<Static> staticSprites;
+	private List<SpecificItem> specificItems;
 
 	public LevelDescriptor() {
 	}
@@ -31,6 +35,15 @@ public class LevelDescriptor {
 	public void setLevelWidth(int levelWidth) {
 		this.levelWidth = levelWidth;
 	}
+	
+	public Actor getCharacter() {
+		return character;
+	}
+
+	public void setCharacter(Actor character) {
+		this.character = character;
+	}
+
 
 	public List<Static> getFirstLayer() {
 		return firstLayer;
@@ -69,6 +82,14 @@ public class LevelDescriptor {
 
 	public void setStaticSprites(List<Static> staticSprites) {
 		this.staticSprites = staticSprites;
+	}
+
+	public List<SpecificItem> getSpecificItems() {
+		return specificItems;
+	}
+
+	public void setSpecificItems(List<SpecificItem> specificItems) {
+		this.specificItems = specificItems;
 	}
 
 }
